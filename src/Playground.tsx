@@ -1,9 +1,10 @@
 import { DsButton } from "@akad/design-system/react";
 import { useState } from "react";
 
-import { DeclarationModal } from "./components/DeclarationModal/DeclarationModal";
-import { DocumentPendingModal } from "./components/DocumentPendingModal/DocumentPendingModal";
+
 import { Modal } from "./components/modal";
+import { DeclarationModal } from "./components/Playground/DeclarationModal/DeclarationModal";
+import { DocumentPendingModal } from "./components/Playground/DocumentPendingModal/DocumentPendingModal";
 
 export const Playground = () => {
   const [isDeclarationModalOpen, setIsDeclarationModalOpen] = useState(false);

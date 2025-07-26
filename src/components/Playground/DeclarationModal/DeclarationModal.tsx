@@ -4,7 +4,7 @@ import {
   DsParagraph,
   DsSpacer
 } from "@akad/design-system/react";
-import { Modal } from "../modal";
+import { Modal } from "../../modal";
 
 import "./DeclarationModal.css";
 
