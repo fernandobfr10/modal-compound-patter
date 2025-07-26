@@ -1,0 +1,11 @@
+.declaration-modal-header {
+  text-align: center;
+}
+
+.declaration-modal-content {
+  max-width: 600px;
+}
+
+.text-justify {
+  text-align: justify;
+}
