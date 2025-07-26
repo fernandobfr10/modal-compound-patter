@@ -1,0 +1,167 @@
+/**
+ * Text Component Styles
+ * 
+ * Following Radix UI Text patterns with 1-9 size scale
+ * Style-agnostic base classes - customize as needed
+ */
+
+/* ===== TEXT BASE ===== */
+.text-base {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  display: block;
+}
+
+/* ===== SIZE SCALE (1-9) ===== */
+/* Following Radix UI size scale */
+.text-size-1 { 
+  font-size: 0.75rem;    /* 12px */
+  line-height: 1.25rem;  /* 20px */
+  letter-spacing: 0.05em;
+}
+
+.text-size-2 { 
+  font-size: 0.875rem;   /* 14px */
+  line-height: 1.25rem;  /* 20px */
+}
+
+.text-size-3 { 
+  font-size: 1rem;       /* 16px - default */
+  line-height: 1.5rem;   /* 24px */
+}
+
+.text-size-4 { 
+  font-size: 1.125rem;   /* 18px */
+  line-height: 1.625rem; /* 26px */
+}
+
+.text-size-5 { 
+  font-size: 1.25rem;    /* 20px */
+  line-height: 1.75rem;  /* 28px */
+}
+
+.text-size-6 { 
+  font-size: 1.5rem;     /* 24px */
+  line-height: 2rem;     /* 32px */
+}
+
+.text-size-7 { 
+  font-size: 1.875rem;   /* 30px */
+  line-height: 2.25rem;  /* 36px */
+}
+
+.text-size-8 { 
+  font-size: 2.25rem;    /* 36px */
+  line-height: 2.5rem;   /* 40px */
+  letter-spacing: -0.02em;
+}
+
+.text-size-9 { 
+  font-size: 3rem;       /* 48px */
+  line-height: 3rem;     /* 48px */
+  letter-spacing: -0.025em;
+}
+
+/* ===== FONT WEIGHTS ===== */
+.text-weight-light { 
+  font-weight: 300; 
+}
+
+.text-weight-regular { 
+  font-weight: 400; 
+}
+
+.text-weight-medium { 
+  font-weight: 500; 
+}
+
+.text-weight-bold { 
+  font-weight: 700; 
+}
+
+/* ===== TEXT ALIGNMENT ===== */
+.text-align-left { 
+  text-align: left; 
+}
+
+.text-align-center { 
+  text-align: center; 
+}
+
+.text-align-right { 
+  text-align: right; 
+}
+
+/* ===== TRUNCATE ===== */
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== ELEMENT-SPECIFIC ADJUSTMENTS ===== */
+/* Reset margins for different elements */
+.text-base p,
+.text-base div,
+.text-base label,
+.text-base span {
+  margin: 0;
+}
+
+/* Inline elements should not have block display */
+.text-base span,
+.text-base b,
+.text-base i,
+.text-base u,
+.text-base s,
+.text-base small,
+.text-base del,
+.text-base ins,
+.text-base sub,
+.text-base sup {
+  display: inline;
+}
+
+/* Preserve semantic meaning for sub/sup */
+.text-base sub {
+  vertical-align: sub;
+  font-size: 0.75em;
+}
+
+.text-base sup {
+  vertical-align: super;
+  font-size: 0.75em;
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 768px) {
+  /* Slightly smaller sizes on mobile for better readability */
+  .text-size-7 { 
+    font-size: 1.5rem;    /* 24px instead of 30px */
+    line-height: 2rem;    /* 32px */
+  }
+  
+  .text-size-8 { 
+    font-size: 1.875rem;  /* 30px instead of 36px */
+    line-height: 2.25rem; /* 36px */
+  }
+  
+  .text-size-9 { 
+    font-size: 2.25rem;   /* 36px instead of 48px */
+    line-height: 2.5rem;  /* 40px */
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+/* Ensure good contrast and readability */
+.text-base {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Improve text rendering for small sizes */
+.text-size-1,
+.text-size-2 {
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+} 

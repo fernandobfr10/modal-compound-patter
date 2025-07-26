@@ -5,8 +5,11 @@ import {
   DsParagraph,
   DsSpacer,
 } from "@akad/design-system/react";
-import { Modal } from "../../modal";
 
+// Component UI
+import { Modal } from "../../../../components/modal";
+
+// Styles
 import "./DocumentPendingModal.css";
 
 const documentPendingDescription = (

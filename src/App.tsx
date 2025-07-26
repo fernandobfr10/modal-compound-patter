@@ -5,6 +5,7 @@ import { DescriptionAsChildDemo } from "./components/modal/description-aschild-d
 import { HtmlValidationFixDemo } from "./components/modal/html-validation-fix-demo"
 import "./components/modal/modal.css"
 import { UnifiedTriggerDemo } from "./components/modal/unified-trigger-demo"
+import { TextDemo } from "./components/text/text-demo"
 
 export const App = () => {
   const [isAsChildDemoOpen, setIsAsChildDemoOpen] = useState(false)
@@ -12,10 +13,11 @@ export const App = () => {
   const [isDescriptionDemoOpen, setIsDescriptionDemoOpen] = useState(false)
   const [isHtmlFixDemoOpen, setIsHtmlFixDemoOpen] = useState(false)
   const [isUnifiedTriggerOpen, setIsUnifiedTriggerOpen] = useState(false)
+  const [isTextDemoOpen, setIsTextDemoOpen] = useState(false)
 
   return (
     <div className="app" style={{ padding: "2rem", fontFamily: "system-ui" }}>
-      <h1>🎭 Modal AsChild Demo</h1>
+      <h1>🎭 Component Demos</h1>
       
       <div style={{ marginBottom: "2rem" }}>
         <button 
@@ -69,10 +71,24 @@ export const App = () => {
             backgroundColor: "#10b981",
             borderColor: "#10b981",
             color: "white",
+            marginRight: "1rem",
             marginBottom: "0.5rem"
           }}
         >
           🔄 Trigger Unificado
+        </button>
+
+        <button 
+          onClick={() => setIsTextDemoOpen(true)}
+          className="modal-trigger"
+          style={{ 
+            backgroundColor: "#8b5cf6",
+            borderColor: "#8b5cf6",
+            color: "white",
+            marginBottom: "0.5rem"
+          }}
+        >
+          📝 Text Component
         </button>
       </div>
 
@@ -321,6 +337,22 @@ export const App = () => {
             </Modal.Header>
             <Modal.Body>
               <UnifiedTriggerDemo />
+            </Modal.Body>
+          </Modal.Content>
+        </Modal.Portal>
+      </Modal.Root>
+
+      {/* Demo Text Component */}
+      <Modal.Root open={isTextDemoOpen} onOpenChange={setIsTextDemoOpen}>
+        <Modal.Portal>
+          <Modal.Overlay />
+          <Modal.Content className="modal-content-large">
+            <Modal.Close />
+            <Modal.Header>
+              <Modal.Title>📝 Text Component Demo</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <TextDemo />
             </Modal.Body>
           </Modal.Content>
         </Modal.Portal>

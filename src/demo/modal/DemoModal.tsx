@@ -1,19 +1,25 @@
 import { DsButton } from "@akad/design-system/react";
 import { useState } from "react";
 
+// Demo Header
+import { DemoHeader } from "../DemoHeader";
 
-import { Modal } from "./components/modal";
-import { DeclarationModal } from "./components/Playground/DeclarationModal/DeclarationModal";
-import { DocumentPendingModal } from "./components/Playground/DocumentPendingModal/DocumentPendingModal";
+// Component UI
+import { Modal } from "../../components/modal";
 
-export const Playground = () => {
+// Custom Modal Components
+import { DeclarationModal } from "./components/DeclarationModal/DeclarationModal";
+import { DocumentPendingModal } from "./components/DocumentPendingModal/DocumentPendingModal";
+
+export const DemoModal = () => {
   const [isDeclarationModalOpen, setIsDeclarationModalOpen] = useState(false);
   const [isDocumentPendingModalOpen, setIsDocumentPendingModalOpen] =
     useState(false);
 
   return (
-    <div className="playground">
-      <div className="playground-buttons">
+    <div className="demo">
+      <DemoHeader title="Modal Component" />
+      <div className="demo-list">
         <Modal.Trigger onOpenChange={setIsDeclarationModalOpen} asChild>
           <DsButton>Abrir Declaration Modal</DsButton>
         </Modal.Trigger>
