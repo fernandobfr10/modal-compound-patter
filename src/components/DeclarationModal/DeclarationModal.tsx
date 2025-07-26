@@ -1,9 +1,8 @@
 import {
   DsButton,
   DsHeading,
-  DsIcon,
   DsParagraph,
-  DsSpacer,
+  DsSpacer
 } from "@akad/design-system/react";
 import { Modal } from "../modal";
 
@@ -53,9 +52,6 @@ export const DeclarationModal = ({
       <Modal.Portal>
         <Modal.Overlay />
         <Modal.Content className=" declaration-modal-content">
-          <Modal.Close asChild>
-            <DsIcon image="close" />
-          </Modal.Close>
           <Modal.Header className="declaration-modal-header">
             <Modal.Title asChild>
               <DsHeading type="heading-5">Declaração de veracidade</DsHeading>

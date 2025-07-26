@@ -31,17 +31,18 @@ Desenvolvemos um **sistema de modal profissional e completo** seguindo as melhor
 - Prop `asChild` inspirada no Radix UI
 - Renderize elementos customizados mantendo comportamento
 - Mesclagem inteligente de props, classes e event handlers
-- Disponível em: `ModalTrigger`, `ModalExternalTrigger`, `ModalClose`, `ModalTitle`, `ModalDescription`, `ModalBody`
+- Disponível em: `ModalTrigger`, `ModalClose`, `ModalTitle`, `ModalDescription`, `ModalBody`
 
-### **6. 🚪 Portal System**
+### **6. 🔄 API Unificada - Trigger Universal**
+- `Modal.Trigger` funciona em **qualquer contexto**
+- Detecta automaticamente se está dentro ou fora do `Modal.Root`
+- API mais simples: um componente para todas as situações
+- Código mais limpo sem componentes deprecated
+
+### **7. 🚪 Portal System**
 - Renderização fora da árvore DOM
 - Evita problemas de z-index e overflow
 - Performance otimizada
-
-### **7. 🎮 External Triggers**
-- `Modal.ExternalTrigger` para triggers fora do `Modal.Root`
-- Suporte a padrão controlado
-- Máxima flexibilidade de posicionamento
 
 ### **8. ♿ Acessibilidade Completa**
 - ARIA labels automáticos
@@ -64,8 +65,7 @@ Desenvolvemos um **sistema de modal profissional e completo** seguindo as melhor
 
 ```tsx
 Modal.Root              // Estado e contexto
-├── Modal.Trigger       // Trigger interno (com asChild)
-├── Modal.ExternalTrigger // Trigger externo (com asChild)
+├── Modal.Trigger       // Trigger unificado (interno/externo + asChild)
 └── Modal.Portal        // Renderização externa
     ├── Modal.Overlay   // Backdrop irmão
     └── Modal.Content   // Modal irmão (auto-centralizado)
@@ -126,12 +126,12 @@ Modal.Root              // Estado e contexto
 </Modal.Root>
 ```
 
-### **Modal com External Trigger**
+### **Modal com Trigger Externo (API Unificada)**
 ```tsx
 // Em qualquer lugar da aplicação
-<Modal.ExternalTrigger onOpenChange={setOpen}>
+<Modal.Trigger onOpenChange={setOpen}>
   Abrir Modal
-</Modal.ExternalTrigger>
+</Modal.Trigger>
 
 // Modal em outro componente
 <Modal.Root open={open} onOpenChange={setOpen}>
@@ -152,6 +152,7 @@ Modal.Root              // Estado e contexto
 - **Compound Pattern** (composabilidade)
 - **Portal Pattern** (renderização externa)
 - **AsChild Pattern** (flexibilidade de renderização)
+- **Unified API Pattern** (simplicidade de uso)
 - **Acessibilidade Web** (ARIA, focus management)
 
 ## 🎊 **Diferenciais Únicos**
@@ -161,7 +162,9 @@ Modal.Root              // Estado e contexto
 2. **API de Irmãos** - Overlay e Content como elementos irmãos 
 3. **Classes Helper** - Sistema inteligente de mesclagem de classes
 4. **AsChild Inteligente** - Mesclagem avançada de props e handlers
-5. **Zero JavaScript** - Posicionamento puramente CSS
+5. **Trigger Unificado** - Um componente para todos os contextos
+6. **Zero JavaScript** - Posicionamento puramente CSS
+7. **Código Limpo** - Sem componentes deprecated
 
 ### **🏆 Qualidade Profissional:**
 - API limpa e intuitiva
@@ -178,7 +181,7 @@ Modal.Root              // Estado e contexto
 | Style-Agnostic | ✅ | ✅ | ✅ | ❌ |
 | Compound Pattern | ✅ | ✅ | ⚠️ | ❌ |
 | AsChild (6 componentes) | ✅ | ⚠️ | ❌ | ❌ |
-| External Triggers | ✅ | ✅ | ❌ | ❌ |
+| Trigger Unificado | ✅ | ❌ | ❌ | ❌ |
 | Auto-Centering | ✅ | ⚠️ | ⚠️ | ❌ |
 | Zero Dependencies | ✅ | ❌ | ❌ | ❌ |
 | Classes Helper | ✅ | ❌ | ❌ | ❌ |
@@ -190,11 +193,12 @@ Modal.Root              // Estado e contexto
 
 **🏆 MISSÃO CUMPRIDA COM EXCELÊNCIA TOTAL!**
 
-### 🆕 **ÚLTIMA ATUALIZAÇÃO: Modal.Description AsChild**
-- Adicionado suporte `asChild` para `Modal.Description`
-- Agora **TODOS** os componentes de conteúdo suportam AsChild
-- **6 componentes** com máxima flexibilidade de renderização
-- **Sistema mais completo que qualquer biblioteca do mercado!**
+### 🆕 **ÚLTIMA ATUALIZAÇÃO: Limpeza Completa**
+- Removido completamente `Modal.ExternalTrigger` e suas referências
+- API mais limpa e sem opções confusas
+- Bundle menor e menos código para manter
+- Documentação simplificada
+- **Sistema ainda mais intuitivo e profissional!**
 
 ---
 

@@ -2,7 +2,6 @@ import { ModalBody } from './modal-body'
 import { ModalClose } from './modal-close'
 import { ModalContent } from './modal-content'
 import { ModalDescription } from './modal-description'
-import { ModalExternalTrigger } from './modal-external-trigger'
 import { ModalFooter } from './modal-footer'
 import { ModalHeader } from './modal-header'
 import { ModalOverlay } from './modal-overlay'
@@ -15,7 +14,6 @@ import { ModalTrigger } from './modal-trigger'
 export const Modal = {
   Root: ModalRoot,
   Trigger: ModalTrigger,
-  ExternalTrigger: ModalExternalTrigger,
   Portal: ModalPortal,
   Overlay: ModalOverlay,
   Content: ModalContent,
@@ -28,7 +26,7 @@ export const Modal = {
 }
 
 // Individual exports for tree-shaking
-export { ModalBody, ModalClose, ModalContent, ModalDescription, ModalExternalTrigger, ModalFooter, ModalHeader, ModalOverlay, ModalPortal, ModalRoot, ModalTitle, ModalTrigger }
+export { ModalBody, ModalClose, ModalContent, ModalDescription, ModalFooter, ModalHeader, ModalOverlay, ModalPortal, ModalRoot, ModalTitle, ModalTrigger }
 
 // Export types
 export type * from './modal.types'

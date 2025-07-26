@@ -12,3 +12,8 @@
   justify-content: center;
   background-color: #fff;
 }
+
+.playground-buttons {
+  display: flex;
+  gap: 16px;
+}

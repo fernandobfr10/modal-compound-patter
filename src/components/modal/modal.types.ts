@@ -1,7 +1,7 @@
 import type {
-    ButtonHTMLAttributes,
-    HTMLAttributes,
-    ReactNode
+  ButtonHTMLAttributes,
+  HTMLAttributes,
+  ReactNode
 } from 'react'
 
 export interface ModalContextType {
@@ -22,6 +22,7 @@ export interface ModalRootProps {
 export interface ModalTriggerProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
   asChild?: boolean
+  onOpenChange?: (open: boolean) => void  // Opcional - para uso externo
 }
 
 export interface ModalPortalProps {
@@ -53,12 +54,6 @@ export interface ModalDescriptionProps extends HTMLAttributes<HTMLParagraphEleme
 
 export interface ModalCloseProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode
-  asChild?: boolean
-}
-
-export interface ModalExternalTriggerProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  onOpenChange: (open: boolean) => void
-  children: ReactNode
   asChild?: boolean
 }
 

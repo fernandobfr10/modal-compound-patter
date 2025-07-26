@@ -1,195 +1,53 @@
-# Modal Component - Compound Pattern Simplificado
+# 🎭 Sistema Modal - Compound Pattern com AsChild
 
-Sistema de modal completo implementando **Compound Pattern** com **centralização automática simplificada**.
+Sistema de modal completo implementando **Compound Pattern** com **API unificada** e **centralização automática simplificada**.
 
-## 🚀 **NOVIDADES: Centralização + AsChild**
+## 🚀 **NOVIDADES: API Unificada + AsChild**
 
 > ✨ **Modal.Content SEMPRE se centraliza automaticamente**  
+> 🔄 **Modal.Trigger unificado: funciona em qualquer contexto**  
 > 🎭 **AsChild: Renderize elementos customizados**  
 > 🎯 **Zero JavaScript para posicionamento**  
 > 🧹 **Código mais limpo e simples**
 
-## ✨ **Características Principais**
+## 🔄 **API Unificada - Modal.Trigger**
 
-- **🧩 Compound Pattern**: API composável e flexível
-- **🎨 Classes Helper**: Função `cn()` para mesclar classes inteligentemente
-- **🔧 Classes Padrão**: Aplicadas automaticamente nos componentes
-- **⚡ Centralização Automática**: Modal.Content sempre centralizado via CSS
-- **🎯 Separação de Responsabilidades**: Overlay = backdrop, Content = posição
-- **🚪 Portal**: Renderização fora da árvore DOM
-- **♿ Acessibilidade**: ARIA labels, focus trap, keyboard navigation
-- **🔒 Scroll Lock**: Bloqueia scroll da página quando aberto (com overlay)
-- **⌨️ Keyboard Support**: Escape para fechar, Tab navigation
-- **📱 Responsivo**: Funciona em todos os dispositivos
-- **⚡ Performance**: CSS puro para posicionamento
-
-## 📦 Componentes
-
+### **❌ Antes (API confusa - REMOVIDO):**
 ```tsx
-Modal.Root          // Container principal com estado
-Modal.Trigger       // Botão para abrir o modal (classe: modal-trigger)
-Modal.ExternalTrigger // Botão externo (classe: modal-trigger)
-Modal.Portal        // Portal para renderização externa
-Modal.Overlay       // Backdrop apenas (classe: modal-overlay)
-Modal.Content       // Container auto-centralizado (classe: modal-content)
-Modal.Header        // Cabeçalho (classe: modal-header)
-Modal.Title         // Título (classe: modal-title)
-Modal.Description   // Descrição (classe: modal-description)
-Modal.Body          // Conteúdo (classe: modal-body)
-Modal.Footer        // Rodapé (classe: modal-footer)
-Modal.Close         // Botão fechar (classe: modal-close)
+// Dentro do contexto
+<Modal.Root>
+  <Modal.Trigger>Interno</Modal.Trigger>
+</Modal.Root>
+
+// Fora do contexto - ❌ COMPONENT REMOVIDO!
+<Modal.ExternalTrigger onOpenChange={setOpen}>
+  Externo
+</Modal.ExternalTrigger>
 ```
 
-## 🚀 Uso Básico - API de Elementos Irmãos
-
+### **✅ Agora (API clara):**
 ```tsx
-import { Modal } from './components/modal'
-import './components/modal/modal.css' // OBRIGATÓRIO
+// Dentro do contexto - detecta automaticamente
+<Modal.Root>
+  <Modal.Trigger>Interno</Modal.Trigger>
+</Modal.Root>
 
-// ✅ Modal completo com backdrop
-function ModalWithOverlay() {
-  return (
-    <Modal.Root>
-      <Modal.Trigger>Abrir Modal</Modal.Trigger>
-      
-      <Modal.Portal>
-        <Modal.Overlay />        {/* Backdrop irmão */}
-        <Modal.Content>          {/* Content irmão - auto-centralizado */}
-          <Modal.Close />
-          <Modal.Header>
-            <Modal.Title>Modal com Overlay</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Conteúdo com backdrop escuro
-          </Modal.Body>
-        </Modal.Content>
-      </Modal.Portal>
-    </Modal.Root>
-  )
-}
+// Fora do contexto - basta passar onOpenChange
+<Modal.Trigger onOpenChange={setOpen}>
+  Externo
+</Modal.Trigger>
 
-// ✅ Modal limpo sem backdrop  
-function ModalWithoutOverlay() {
-  return (
-    <Modal.Root>
-      <Modal.Trigger>Abrir Modal</Modal.Trigger>
-      
-      <Modal.Portal>
-        <Modal.Content>          {/* Auto-centralizado também! */}
-          <Modal.Close />
-          <Modal.Header>
-            <Modal.Title>Modal sem Overlay</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Conteúdo sem backdrop
-          </Modal.Body>
-        </Modal.Content>
-      </Modal.Portal>
-    </Modal.Root>
-  )
-}
+// Funciona com asChild também!
+<Modal.Trigger asChild onOpenChange={setOpen}>
+  <MyCustomButton>Customizado</MyCustomButton>
+</Modal.Trigger>
 ```
 
-## 🎯 **Nova API: Elementos Irmãos**
-
-### **❌ API Anterior (Aninhada):**
-```tsx
-<Modal.Portal>
-  <Modal.Overlay>          {/* Pai */}
-    <Modal.Content>        {/* Filho */}
-      {/* conteúdo */}
-    </Modal.Content>
-  </Modal.Overlay>
-</Modal.Portal>
-```
-
-### **✅ Nova API (Irmãos):**
-```tsx
-<Modal.Portal>
-  <Modal.Overlay />        {/* Irmão 1 - Backdrop */}
-  <Modal.Content>          {/* Irmão 2 - Modal */}
-    {/* conteúdo */}
-  </Modal.Content>
-</Modal.Portal>
-```
-
-### **🎨 CSS Resultante:**
-```css
-/* Overlay = Apenas backdrop (z-index: 50) */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* Content = Auto-centralizado (z-index: 51) */
-.modal-content {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90vw;
-  max-width: 32rem;
-}
-```
-
-## 🎮 **Exemplos Práticos**
-
-### **Modal com Backdrop**
-```tsx
-function ModalWithBackdrop() {
-  const [isOpen, setIsOpen] = useState(false)
-  
-  return (
-    <Modal.Root open={isOpen} onOpenChange={setIsOpen}>
-      <Modal.Portal>
-        <Modal.Overlay>        {/* ✅ Backdrop escuro */}
-          <Modal.Content>      {/* ✅ Centralizado */}
-            <Modal.Header>
-              <Modal.Title>Modal Tradicional</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <p>✅ Backdrop escuro</p>
-              <p>✅ Scroll lock automático</p>
-              <p>✅ Click fora para fechar</p>
-            </Modal.Body>
-          </Modal.Content>
-        </Modal.Overlay>
-      </Modal.Portal>
-    </Modal.Root>
-  )
-}
-```
-
-### **Modal sem Backdrop**
-```tsx
-function ModalWithoutBackdrop() {
-  const [isOpen, setIsOpen] = useState(false)
-  
-  return (
-    <Modal.Root open={isOpen} onOpenChange={setIsOpen}>
-      <Modal.Portal>
-        <Modal.Content>        {/* ✅ Centralizado da mesma forma! */}
-          <Modal.Header>
-            <Modal.Title>Modal Limpo</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>🚫 Sem backdrop</p>
-            <p>✅ Centralizado igual ao outro</p>
-            <p>⚠️ Sem scroll lock</p>
-            <p>⚠️ Sem click fora para fechar</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <button onClick={() => setIsOpen(false)}>
-              Fechar
-            </button>
-          </Modal.Footer>
-        </Modal.Content>
-      </Modal.Portal>
-    </Modal.Root>
-  )
-}
-```
+### **🧠 Como Funciona:**
+1. **Modal.Trigger** verifica se está dentro do contexto
+2. Se estiver, usa `context.onOpenChange` automaticamente
+3. Se não estiver, usa a prop `onOpenChange` fornecida
+4. Funciona perfeitamente com `asChild` em ambos os casos
 
 ## 🎭 **AsChild: Elementos Customizados**
 
@@ -209,15 +67,10 @@ A prop `asChild` permite renderizar elementos customizados mantendo o comportame
 
 ### **Componentes com AsChild:**
 ```tsx
-// Trigger customizado
-<Modal.Trigger asChild>
+// Trigger customizado (interno ou externo)
+<Modal.Trigger asChild onOpenChange={setOpen}>
   <a href="#" className="link-trigger">Abrir Modal</a>
 </Modal.Trigger>
-
-// External Trigger customizado
-<Modal.ExternalTrigger asChild onOpenChange={setOpen}>
-  <div className="custom-button">Open</div>
-</Modal.ExternalTrigger>
 
 // Close customizado
 <Modal.Close asChild>
@@ -243,13 +96,13 @@ A prop `asChild` permite renderizar elementos customizados mantendo o comportame
 ### **Mesclagem Inteligente:**
 ```tsx
 // Event handlers são combinados
-<Modal.Trigger asChild onClick={() => console.log('Custom!')}>
+<Modal.Trigger asChild onClick={() => console.log('Custom!')} onOpenChange={setOpen}>
   <button onClick={() => console.log('Child!')}>Click</button>
 </Modal.Trigger>
 // Ambos os handlers são chamados!
 
 // Classes são mescladas
-<Modal.Trigger asChild className="trigger-style">
+<Modal.Trigger asChild className="trigger-style" onOpenChange={setOpen}>
   <div className="custom-style">Click</div>
 </Modal.Trigger>
 // Resultado: "modal-trigger trigger-style custom-style"
@@ -272,49 +125,88 @@ import { cn } from '../../utils/cn'
 // → "modal-content modal-content-large modal-loading"
 ```
 
-## ⚙️ **Props API (Inalterado)**
+## 🏗️ **Arquitetura e Uso**
 
-### Modal.Root
+### **Estrutura Básica**
 ```tsx
-interface ModalRootProps {
-  open?: boolean              // Estado controlado
-  defaultOpen?: boolean       // Estado inicial (não controlado)
-  onOpenChange?: (open: boolean) => void  // Callback de mudança
-  children: ReactNode
-}
+<Modal.Root>
+  <Modal.Trigger>Abrir Modal</Modal.Trigger>
+  
+  <Modal.Portal>
+    <Modal.Overlay />
+    <Modal.Content>
+      <Modal.Close />
+      <Modal.Header>
+        <Modal.Title>Título</Modal.Title>
+        <Modal.Description>Descrição</Modal.Description>
+      </Modal.Header>
+      <Modal.Body>Conteúdo</Modal.Body>
+      <Modal.Footer>Ações</Modal.Footer>
+    </Modal.Content>
+  </Modal.Portal>
+</Modal.Root>
 ```
+
+### **Trigger Externo (API Unificada)**
+```tsx
+// Em qualquer lugar da aplicação
+<Modal.Trigger onOpenChange={setOpen}>
+  Trigger Externo
+</Modal.Trigger>
+
+// Modal separado
+<Modal.Root open={open} onOpenChange={setOpen}>
+  <Modal.Portal>
+    <Modal.Overlay />
+    <Modal.Content>
+      {/* conteúdo */}
+    </Modal.Content>
+  </Modal.Portal>
+</Modal.Root>
+```
+
+### **Modalidade Controlled/Uncontrolled**
+```tsx
+// Uncontrolled (estado interno)
+<Modal.Root defaultOpen={false}>
+  <Modal.Trigger>Abrir</Modal.Trigger>
+  {/* ... */}
+</Modal.Root>
+
+// Controlled (estado externo)
+<Modal.Root open={isOpen} onOpenChange={setIsOpen}>
+  {/* ... */}
+</Modal.Root>
+```
+
+## 🔧 **API Reference**
 
 ### Componentes com AsChild
 ```tsx
 interface ModalTriggerProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
-  asChild?: boolean     // Renderiza o child ao invés do elemento padrão
-}
-
-interface ModalExternalTriggerProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  onOpenChange: (open: boolean) => void
-  children: ReactNode
-  asChild?: boolean     // Renderiza o child ao invés do elemento padrão
+  asChild?: boolean
+  onOpenChange?: (open: boolean) => void  // Opcional - para uso externo
 }
 
 interface ModalCloseProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode
-  asChild?: boolean     // Renderiza o child ao invés do elemento padrão
+  asChild?: boolean
 }
 
 interface ModalTitleProps extends HTMLAttributes<HTMLHeadingElement> {
   children: ReactNode
-  asChild?: boolean     // Renderiza o child ao invés do elemento padrão
+  asChild?: boolean
 }
 
 interface ModalDescriptionProps extends HTMLAttributes<HTMLParagraphElement> {
   children: ReactNode
-  asChild?: boolean     // Renderiza o child ao invés do elemento padrão
+  asChild?: boolean
 }
 
 interface ModalBodyProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode
-  asChild?: boolean     // Renderiza o child ao invés do elemento padrão
+  asChild?: boolean
 }
 ```
 
@@ -327,104 +219,45 @@ interface BaseModalProps extends HTMLAttributes<HTMLElement> {
 }
 ```
 
-## 🎯 **Vantagens da Nova Abordagem**
+## ♿ **Acessibilidade**
 
-### **✅ Menos Complexidade**
-```tsx
-// ❌ Antes: Lógica de detecção de contexto
-const [isStandalone, setIsStandalone] = useState(false)
-useEffect(() => {
-  const hasOverlayParent = element.closest('.modal-overlay')
-  setIsStandalone(!hasOverlayParent)
-}, [])
+- **Focus Management**: Focus trap automático quando aberto
+- **Keyboard Navigation**: Escape para fechar, Tab/Shift+Tab para navegar
+- **ARIA Labels**: `role="dialog"`, `aria-modal="true"`, `aria-labelledby`, `aria-describedby`
+- **IDs únicos**: Gerados automaticamente para cada instância
 
-// ✅ Agora: Zero JavaScript
-// CSS puro resolve tudo!
-```
+## 🎯 **Classes CSS**
 
-### **✅ Comportamento Consistente**
-```tsx
-// Ambos os casos funcionam EXATAMENTE igual:
-<Modal.Overlay><Modal.Content /></Modal.Overlay>  // Centralizado
-<Modal.Content />                                 // Centralizado
-```
-
-### **✅ CSS Mais Limpo**
+### **Classes Obrigatórias (Funcionais)**
 ```css
-/* ❌ Antes: Duas classes diferentes */
-.modal-content { position: relative; }
-.modal-content-standalone { position: fixed; /* ... */ }
+/* OBRIGATÓRIO para funcionamento */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
 
-/* ✅ Agora: Uma classe única */
-.modal-content { 
+.modal-content {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 51;
 }
 ```
 
-### **✅ Separação de Responsabilidades**
-```tsx
-// Modal.Overlay = Apenas backdrop e eventos
-// Modal.Content = Apenas conteúdo e posição
-// Cada um tem sua responsabilidade clara!
-```
-
-## 🔄 **Comparação: Antes vs Agora**
-
-| Aspecto | Antes (Complexo) | Agora (Simples) |
-|---------|------------------|-----------------|
-| **CSS Classes** | 2 classes diferentes | 1 classe única |
-| **JavaScript** | Detecção de contexto | Zero lógica |
-| **Performance** | Re-renders para mudança | CSS puro |
-| **Manutenção** | Lógica condicional | Direto ao ponto |
-| **Bundle Size** | +useState +useEffect | Menor |
-| **Complexidade** | Alta | Baixa |
-
-## 📝 **Migration Guide**
-
-### **Se Estava Usando a Versão Anterior:**
-
-```tsx
-// ✅ Continua funcionando exatamente igual!
-<Modal.Overlay>
-  <Modal.Content>
-    {/* Não precisa mudar NADA */}
-  </Modal.Content>
-</Modal.Overlay>
-
-// ✅ Agora também funciona perfeitamente!
-<Modal.Content>
-  {/* Centralizado automaticamente */}
-</Modal.Content>
-```
-
-**Não há breaking changes!** A API continua igual, mas agora é mais simples internamente.
-
-## 🎨 **CSS Classes Disponíveis**
-
-### **Classes Padrão (Aplicadas Automaticamente)**
+### **Classes Opcionais (Visuais)**
 ```css
-.modal-overlay          /* Backdrop apenas */
-.modal-content          /* Container auto-centralizado */
-.modal-header           /* Cabeçalho */
-.modal-title            /* Título */
-.modal-description      /* Descrição */
-.modal-body             /* Conteúdo */
-.modal-footer           /* Rodapé */
-.modal-close            /* Botão fechar */
-.modal-trigger          /* Botões trigger */
-```
+/* Exemplos de estilos visuais */
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+}
 
-### **Classes de Variação (Opcionais)**
-```css
-.modal-content-small    /* Modal pequeno */
-.modal-content-large    /* Modal grande */
-.modal-trigger-primary  /* Botão azul */
-.modal-trigger-secondary/* Botão cinza */
-.modal-trigger-success  /* Botão verde */
-.modal-trigger-danger   /* Botão vermelho */
+.modal-trigger-primary    /* Botão azul */
+.modal-trigger-secondary  /* Botão cinza */
+.modal-trigger-success    /* Botão verde */
+.modal-trigger-danger     /* Botão vermelho */
 ```
 
 ## 🎯 **Funcionalidades Implementadas**
@@ -434,10 +267,10 @@ useEffect(() => {
 - [x] **Classes Helper** - Sistema cn() para mesclar classes
 - [x] **Centralização Automática** - Modal.Content sempre centralizado
 - [x] **API de Irmãos** - Overlay e Content como elementos irmãos
-- [x] **AsChild** - Renderize elementos customizados (Trigger, ExternalTrigger, Close, Title, Description, Body)
+- [x] **AsChild** - Renderize elementos customizados (Trigger, Close, Title, Description, Body)
+- [x] **Trigger Unificado** - Um componente para todos os contextos
 - [x] **Acessibilidade** - ARIA completo, focus trap, keyboard nav
 - [x] **Portal System** - Renderização externa eficiente
-- [x] **External Triggers** - Triggers fora do Modal.Root
 - [x] **TypeScript** - Tipagem completa e precisa
 
 ### ✅ **Performance & UX**
@@ -462,7 +295,7 @@ MIT
 ---
 
 **🎭 Sistema de Modal Completo e Profissional!**  
-**🎯 Centralização automática + AsChild + API de irmãos**  
+**🔄 API unificada + AsChild + Centralização automática**  
 **⚡ Performance máxima com CSS puro**  
 **🧹 Arquitetura limpa inspirada no Radix UI**  
 **🚀 TypeScript, acessibilidade e flexibilidade total!** 

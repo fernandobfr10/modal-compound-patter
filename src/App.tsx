@@ -4,12 +4,14 @@ import { AsChildDemo } from "./components/modal/as-child-demo"
 import { DescriptionAsChildDemo } from "./components/modal/description-aschild-demo"
 import { HtmlValidationFixDemo } from "./components/modal/html-validation-fix-demo"
 import "./components/modal/modal.css"
+import { UnifiedTriggerDemo } from "./components/modal/unified-trigger-demo"
 
 export const App = () => {
   const [isAsChildDemoOpen, setIsAsChildDemoOpen] = useState(false)
   const [isCloseAsChildOpen, setIsCloseAsChildOpen] = useState(false)
   const [isDescriptionDemoOpen, setIsDescriptionDemoOpen] = useState(false)
   const [isHtmlFixDemoOpen, setIsHtmlFixDemoOpen] = useState(false)
+  const [isUnifiedTriggerOpen, setIsUnifiedTriggerOpen] = useState(false)
 
   return (
     <div className="app" style={{ padding: "2rem", fontFamily: "system-ui" }}>
@@ -53,21 +55,35 @@ export const App = () => {
             backgroundColor: "#ef4444",
             borderColor: "#ef4444",
             color: "white",
+            marginRight: "1rem",
             marginBottom: "0.5rem"
           }}
         >
           🚨 Corrigir Erros HTML
         </button>
+
+        <button 
+          onClick={() => setIsUnifiedTriggerOpen(true)}
+          className="modal-trigger"
+          style={{ 
+            backgroundColor: "#10b981",
+            borderColor: "#10b981",
+            color: "white",
+            marginBottom: "0.5rem"
+          }}
+        >
+          🔄 Trigger Unificado
+        </button>
       </div>
 
       <div style={{ marginBottom: "2rem" }}>
-        <h3>🚀 Teste Rápido - AsChild em Ação:</h3>
+        <h3>🚀 Teste Rápido - Trigger Unificado:</h3>
         
-        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-          {/* Trigger padrão */}
+        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+          {/* Trigger interno (dentro do contexto) */}
           <Modal.Root>
             <Modal.Trigger className="modal-trigger-secondary">
-              Trigger Padrão (Button)
+              Trigger Interno
             </Modal.Trigger>
             
             <Modal.Portal>
@@ -75,64 +91,39 @@ export const App = () => {
               <Modal.Content>
                 <Modal.Close />
                 <Modal.Header>
-                  <Modal.Title>Modal com Elementos Padrão</Modal.Title>
+                  <Modal.Title>Modal com Trigger Interno</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <p>Este modal usa todos os elementos padrão sem asChild.</p>
+                  <p>Este trigger está <strong>dentro</strong> do Modal.Root e usa o contexto automaticamente!</p>
                 </Modal.Body>
               </Modal.Content>
             </Modal.Portal>
           </Modal.Root>
 
-          {/* Trigger customizado com asChild */}
-          <Modal.Root>
-            <Modal.Trigger asChild>
-              <div style={{
-                background: "linear-gradient(45deg, #3b82f6, #1d4ed8)",
-                color: "white",
-                padding: "0.75rem 1rem",
-                borderRadius: "0.5rem",
-                cursor: "pointer",
-                fontWeight: "600",
-                display: "inline-block"
-              }}>
-                🎨 Trigger AsChild (Div)
-              </div>
-            </Modal.Trigger>
-            
-            <Modal.Portal>
-              <Modal.Overlay />
-              <Modal.Content>
-                <Modal.Close />
-                <Modal.Header>
-                  <Modal.Title asChild>
-                    <h1 style={{
-                      background: "linear-gradient(45deg, #3b82f6, #1d4ed8)",
-                      backgroundClip: "text",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      fontSize: "1.5rem",
-                      margin: 0
-                    }}>
-                      ✨ Título AsChild (H1)
-                    </h1>
-                  </Modal.Title>
-                </Modal.Header>
-                <Modal.Body asChild>
-                  <section style={{
-                    background: "linear-gradient(135deg, #dbeafe, #bfdbfe)",
-                    padding: "1rem",
-                    borderRadius: "0.5rem",
-                    border: "2px dashed #3b82f6"
-                  }}>
-                    <p style={{ margin: 0 }}>
-                      Este modal usa <strong>asChild</strong> nos componentes Trigger, Title e Body!
-                    </p>
-                  </section>
-                </Modal.Body>
-              </Modal.Content>
-            </Modal.Portal>
-          </Modal.Root>
+          {/* Trigger externo (fora do contexto) - NOVO! */}
+          <Modal.Trigger 
+            onOpenChange={setIsCloseAsChildOpen}
+            className="modal-trigger"
+            style={{ 
+              backgroundColor: "#fbbf24",
+              borderColor: "#fbbf24",
+              color: "#92400e"
+            }}
+          >
+            Trigger Externo (NOVO!)
+          </Modal.Trigger>
+        </div>
+
+        <div style={{
+          backgroundColor: "#f0fdf4",
+          border: "1px solid #bbf7d0",
+          borderRadius: "0.5rem",
+          padding: "1rem",
+          fontSize: "0.875rem"
+        }}>
+          <strong>🎯 API Unificada:</strong> Agora você pode usar <code>Modal.Trigger</code> em qualquer lugar! 
+          Se estiver dentro do <code>Modal.Root</code>, usa o contexto automaticamente. 
+          Se estiver fora, basta passar <code>onOpenChange</code>.
         </div>
       </div>
 
@@ -177,7 +168,7 @@ export const App = () => {
             </Modal.Close>
             
             <Modal.Header>
-              <Modal.Title>🆕 Modal Close AsChild Demo</Modal.Title>
+              <Modal.Title>🔄 Trigger Unificado + AsChild</Modal.Title>
               <Modal.Description asChild>
                 <div style={{
                   color: "#6b7280",
@@ -188,58 +179,56 @@ export const App = () => {
                   borderRadius: "0.25rem",
                   border: "1px dashed #d1d5db"
                 }}>
-                  📝 Description customizada com asChild - agora usando um DIV estilizado!
+                  📝 Este modal foi aberto por um trigger <strong>externo</strong> usando a nova API unificada!
                 </div>
               </Modal.Description>
             </Modal.Header>
             
             <Modal.Body>
               <div style={{ 
-                backgroundColor: "#fef2f2", 
-                border: "2px solid #fecaca",
+                backgroundColor: "#f0fdf4", 
+                border: "2px solid #bbf7d0",
                 borderRadius: "0.5rem",
                 padding: "1.5rem",
                 marginBottom: "1rem"
               }}>
-                <h4 style={{ margin: "0 0 1rem 0", color: "#b91c1c" }}>🎯 Modal.Close e Description AsChild</h4>
+                <h4 style={{ margin: "0 0 1rem 0", color: "#047857" }}>🎉 API Unificada Funcionando!</h4>
                 
                 <div style={{ marginBottom: "1rem" }}>
-                  <strong style={{ color: "#dc2626" }}>✨ O que mudou:</strong>
-                  <ul style={{ margin: "0.5rem 0", fontSize: "0.875rem", color: "#7f1d1d" }}>
-                    <li>Agora <code>Modal.Close</code> e <code>Modal.Description</code> também suportam <code>asChild</code></li>
-                    <li>Botão customizado em formato circular com gradiente</li>
-                    <li>Description como DIV estilizado ao invés de parágrafo</li>
-                    <li>Animação de hover personalizada</li>
-                    <li>Mantém toda a funcionalidade e acessibilidade</li>
+                  <strong style={{ color: "#059669" }}>✨ O que mudou:</strong>
+                  <ul style={{ margin: "0.5rem 0", fontSize: "0.875rem", color: "#065f46" }}>
+                    <li>Agora <code>Modal.Trigger</code> funciona em <strong>qualquer lugar</strong></li>
+                    <li>Detecta automaticamente se está dentro ou fora do contexto</li>
+                    <li>API mais simples: um só componente para todas as situações</li>
+                    <li>Mantém compatibilidade total com <code>asChild</code></li>
+                    <li>Código mais limpo sem componentes deprecated</li>
                   </ul>
                 </div>
                 
                 <div style={{
-                  backgroundColor: "#f0fdf4",
-                  border: "1px solid #bbf7d0",
+                  backgroundColor: "#ecfdf5",
+                  border: "1px solid #a7f3d0",
                   borderRadius: "0.25rem",
                   padding: "1rem",
                   fontSize: "0.875rem"
                 }}>
-                  <strong style={{ color: "#15803d" }}>💡 Exemplo de código:</strong>
+                  <strong style={{ color: "#047857" }}>💡 Exemplo prático:</strong>
                   <pre style={{ 
                     margin: "0.5rem 0 0 0", 
                     fontFamily: "Monaco, Consolas, monospace",
                     fontSize: "0.75rem",
-                    color: "#166534",
+                    color: "#065f46",
                     whiteSpace: "pre-wrap"
                   }}>
-{`<Modal.Close asChild>
-  <div className="custom-close-button">
-    ✕
-  </div>
-</Modal.Close>
+{`// Funciona em qualquer lugar!
+<Modal.Trigger onOpenChange={setOpen}>
+  Abrir Modal
+</Modal.Trigger>
 
-<Modal.Description asChild>
-  <div className="styled-description">
-    Descrição customizada
-  </div>
-</Modal.Description>`}
+// Com asChild também
+<Modal.Trigger asChild onOpenChange={setOpen}>
+  <MyCustomButton>Customizado</MyCustomButton>
+</Modal.Trigger>`}
                   </pre>
                 </div>
               </div>
@@ -250,7 +239,7 @@ export const App = () => {
                 borderRadius: "0.25rem",
                 border: "1px solid #0ea5e9"
               }}>
-                <strong style={{ color: "#0c4a6e" }}>🎉 Todos os componentes com AsChild:</strong>
+                <strong style={{ color: "#0c4a6e" }}>🎯 Sistema Completo:</strong>
                 <div style={{ 
                   display: "grid", 
                   gridTemplateColumns: "1fr 1fr", 
@@ -258,14 +247,13 @@ export const App = () => {
                   marginTop: "0.5rem",
                   fontSize: "0.875rem"
                 }}>
-                  <div>✅ Modal.Trigger</div>
-                  <div>✅ Modal.ExternalTrigger</div>
+                  <div>✅ Modal.Trigger (unificado)</div>
                   <div>✅ Modal.Close</div>
                   <div>✅ Modal.Title</div>
                   <div>✅ Modal.Description</div>
                   <div>✅ Modal.Body</div>
                   <div style={{ gridColumn: "1 / -1", fontWeight: "600", color: "#059669" }}>
-                    🎯 6 componentes com AsChild!
+                    🔄 API mais simples e consistente!
                   </div>
                 </div>
               </div>
@@ -317,6 +305,22 @@ export const App = () => {
             </Modal.Header>
             <Modal.Body>
               <HtmlValidationFixDemo />
+            </Modal.Body>
+          </Modal.Content>
+        </Modal.Portal>
+      </Modal.Root>
+
+      {/* Demo Trigger Unificado */}
+      <Modal.Root open={isUnifiedTriggerOpen} onOpenChange={setIsUnifiedTriggerOpen}>
+        <Modal.Portal>
+          <Modal.Overlay />
+          <Modal.Content className="modal-content-large">
+            <Modal.Close />
+            <Modal.Header>
+              <Modal.Title>🔄 Demo Trigger Unificado</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <UnifiedTriggerDemo />
             </Modal.Body>
           </Modal.Content>
         </Modal.Portal>
