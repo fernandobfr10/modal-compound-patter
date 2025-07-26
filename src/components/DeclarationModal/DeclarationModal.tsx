@@ -10,8 +10,8 @@ import { Modal } from "../modal";
 import "./DeclarationModal.css";
 
 const declarationDescription = (
-  <>
-    <DsParagraph className="text-justify">
+  <div>
+    <DsParagraph className="declaration-modal-description">
       É obrigatório que <b>proponente</b> reconheça que se as informações
       prestadas, que serviram de base para a aceitação e definição dos custos e
       condições forem significativamente divergentes da realidade, o{" "}
@@ -19,7 +19,7 @@ const declarationDescription = (
       gerais.
     </DsParagraph>
     <DsSpacer vertical="nano" />
-    <DsParagraph className="text-justify">
+    <DsParagraph className="declaration-modal-description">
       <code>&bull;</code> O <b>proponente</b> reconhece que se as informações
       prestadas neste questionário, que serviram de base para a aceitação e
       definição dos custos e condições forem significativamente divergentes da
@@ -27,7 +27,7 @@ const declarationDescription = (
       condições gerais. gerais.
     </DsParagraph>
     <DsSpacer vertical="nano" />
-    <DsParagraph className="text-justify">
+    <DsParagraph className="declaration-modal-description">
       <code>&bull;</code> O <b>proponente</b> deve notificar a <b>Seguradora</b>
       , o mais rápido possível, sobre qualquer alteração das informações
       contidas no questionário, ocorridas antes do início da vigência do seguro.
@@ -36,15 +36,17 @@ const declarationDescription = (
       qualquer investigação ou pergunta relacionada ao risco, na medida em que
       julgue necessário.
     </DsParagraph>
-  </>
+  </div>
 );
 
 export const DeclarationModal = ({
   open,
   onOpenChange,
+  onConfirmAction,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onConfirmAction: () => void;
 }) => {
   return (
     <Modal.Root open={open} onOpenChange={onOpenChange}>
@@ -55,15 +57,15 @@ export const DeclarationModal = ({
             <DsIcon image="close" />
           </Modal.Close>
           <Modal.Header className="declaration-modal-header">
-            <Modal.Title>
+            <Modal.Title asChild>
               <DsHeading type="heading-5">Declaração de veracidade</DsHeading>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Modal.Description asChild>{declarationDescription}</Modal.Description>
           </Modal.Body>
-          <Modal.Footer>
-            <DsButton onClick={() => console.log('CONFIRMADO')}>Confirmar</DsButton>
+          <Modal.Footer className="declaration-modal-footer">
+            <DsButton onClick={() => onConfirmAction()}>Confirmar</DsButton>
           </Modal.Footer>
         </Modal.Content>
       </Modal.Portal>

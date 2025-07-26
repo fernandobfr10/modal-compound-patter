@@ -13,7 +13,11 @@ export const Playground = () => {
         <DsButton >Abrir Akad Modal</DsButton>
       </Modal.ExternalTrigger>
 
-      <DeclarationModal open={isAkadModalOpen} onOpenChange={setIsAkadModalOpen} />
+      <DeclarationModal 
+        open={isAkadModalOpen} 
+        onOpenChange={setIsAkadModalOpen} 
+        onConfirmAction={() => setIsAkadModalOpen(false)}
+        />
     </div>
   );
 };

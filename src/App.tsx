@@ -2,12 +2,14 @@ import { useState } from "react"
 import { Modal } from "./components/modal"
 import { AsChildDemo } from "./components/modal/as-child-demo"
 import { DescriptionAsChildDemo } from "./components/modal/description-aschild-demo"
+import { HtmlValidationFixDemo } from "./components/modal/html-validation-fix-demo"
 import "./components/modal/modal.css"
 
 export const App = () => {
   const [isAsChildDemoOpen, setIsAsChildDemoOpen] = useState(false)
   const [isCloseAsChildOpen, setIsCloseAsChildOpen] = useState(false)
   const [isDescriptionDemoOpen, setIsDescriptionDemoOpen] = useState(false)
+  const [isHtmlFixDemoOpen, setIsHtmlFixDemoOpen] = useState(false)
 
   return (
     <div className="app" style={{ padding: "2rem", fontFamily: "system-ui" }}>
@@ -17,7 +19,7 @@ export const App = () => {
         <button 
           onClick={() => setIsAsChildDemoOpen(true)}
           className="modal-trigger modal-trigger-primary"
-          style={{ marginRight: "1rem" }}
+          style={{ marginRight: "1rem", marginBottom: "0.5rem" }}
         >
           Ver Demo AsChild Completo
         </button>
@@ -25,7 +27,7 @@ export const App = () => {
         <button 
           onClick={() => setIsCloseAsChildOpen(true)}
           className="modal-trigger modal-trigger-secondary"
-          style={{ marginRight: "1rem" }}
+          style={{ marginRight: "1rem", marginBottom: "0.5rem" }}
         >
           🆕 Demo Close AsChild
         </button>
@@ -36,10 +38,25 @@ export const App = () => {
           style={{ 
             backgroundColor: "#fbbf24",
             borderColor: "#fbbf24",
-            color: "#92400e"
+            color: "#92400e",
+            marginRight: "1rem",
+            marginBottom: "0.5rem"
           }}
         >
           📝 Demo Description AsChild
+        </button>
+
+        <button 
+          onClick={() => setIsHtmlFixDemoOpen(true)}
+          className="modal-trigger"
+          style={{ 
+            backgroundColor: "#ef4444",
+            borderColor: "#ef4444",
+            color: "white",
+            marginBottom: "0.5rem"
+          }}
+        >
+          🚨 Corrigir Erros HTML
         </button>
       </div>
 
@@ -284,6 +301,22 @@ export const App = () => {
             </Modal.Header>
             <Modal.Body>
               <DescriptionAsChildDemo />
+            </Modal.Body>
+          </Modal.Content>
+        </Modal.Portal>
+      </Modal.Root>
+
+      {/* Demo HTML Fix */}
+      <Modal.Root open={isHtmlFixDemoOpen} onOpenChange={setIsHtmlFixDemoOpen}>
+        <Modal.Portal>
+          <Modal.Overlay />
+          <Modal.Content className="modal-content-large">
+            <Modal.Close />
+            <Modal.Header>
+              <Modal.Title>🚨 Corrigindo Erros de HTML</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <HtmlValidationFixDemo />
             </Modal.Body>
           </Modal.Content>
         </Modal.Portal>
