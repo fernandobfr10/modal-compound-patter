@@ -7,14 +7,14 @@ import type { TextProps } from './text.types'
  * Default Text component implementation
  */
 const DefaultText = forwardRef<HTMLElement, Omit<TextProps, 'asChild'>>(
-  ({ children, as = 'span', size = '3', weight = 'regular', align, truncate, className, ...props }, ref) => {
+  ({ children, as = 'p', size = '3', weight = 'regular', align, trim = 'normal', truncate, wrap = 'wrap', className, ...props }, ref) => {
     const Element = as
     
     return createElement(
       Element,
       {
         ref,
-        className: textClasses({ size, weight, align, truncate, className }),
+        className: textClasses({ size, weight, align, trim, truncate, wrap, className }),
         ...props,
       },
       children
@@ -29,7 +29,7 @@ DefaultText.displayName = 'DefaultText'
  * 
  * @example
  * ```tsx
- * // Basic text (renders as span by default)
+ * // Basic text (renders as p by default)
  * <Text>Hello world</Text>
  * 
  * // Different sizes (1-9 scale)
@@ -37,12 +37,12 @@ DefaultText.displayName = 'DefaultText'
  * <Text size="6">Large text</Text>
  * 
  * // Different elements
- * <Text as="p">Paragraph text</Text>
+ * <Text as="span">Span text</Text>
  * <Text as="label">Label text</Text>
  * 
- * // With styling
- * <Text size="4" weight="bold" align="center">
- *   Centered bold text
+ * // With styling and new props
+ * <Text size="4" weight="bold" align="center" trim="both" wrap="balance">
+ *   Styled text with trimming and text-wrap balance
  * </Text>
  * 
  * // With asChild - renders custom element
@@ -52,7 +52,7 @@ DefaultText.displayName = 'DefaultText'
  * ```
  */
 export const Text = forwardRef<HTMLElement, TextProps>(
-  ({ children, as = 'span', size = '3', weight = 'regular', align, truncate, className, asChild, ...props }, ref) => {
+  ({ children, as = 'p', size = '3', weight = 'regular', align, trim = 'normal', truncate, wrap = 'wrap', className, asChild, ...props }, ref) => {
     if (asChild) {
       return renderAsChild(
         asChild,
@@ -64,7 +64,9 @@ export const Text = forwardRef<HTMLElement, TextProps>(
           size,
           weight,
           align,
+          trim,
           truncate,
+          wrap,
           className,
           ref,
           ...props,
@@ -79,7 +81,9 @@ export const Text = forwardRef<HTMLElement, TextProps>(
         size={size}
         weight={weight}
         align={align}
+        trim={trim}
         truncate={truncate}
+        wrap={wrap}
         className={className}
         {...props}
       >

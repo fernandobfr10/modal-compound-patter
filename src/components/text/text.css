@@ -92,6 +92,43 @@
   text-align: right; 
 }
 
+/* ===== TEXT TRIMMING ===== */
+/* Radix UI text-trim support */
+.text-trim-normal {
+  text-trim: normal;
+}
+
+.text-trim-start {
+  text-trim: trim-start;
+}
+
+.text-trim-end {
+  text-trim: trim-end;
+}
+
+.text-trim-both {
+  text-trim: trim-both;
+}
+
+/* Fallback for browsers that don't support text-trim */
+@supports not (text-trim: normal) {
+  .text-trim-start {
+    margin-top: 0;
+    line-height: 1;
+  }
+  
+  .text-trim-end {
+    margin-bottom: 0;
+    line-height: 1;
+  }
+  
+  .text-trim-both {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1;
+  }
+}
+
 /* ===== TRUNCATE ===== */
 .text-truncate {
   overflow: hidden;
@@ -99,27 +136,73 @@
   white-space: nowrap;
 }
 
+/* ===== TEXT WRAPPING ===== */
+/* Radix UI text-wrap support */
+.text-wrap-wrap {
+  text-wrap: wrap;
+  word-wrap: break-word;
+}
+
+.text-wrap-nowrap {
+  text-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.text-wrap-pretty {
+  text-wrap: pretty;
+  word-wrap: break-word;
+}
+
+.text-wrap-balance {
+  text-wrap: balance;
+  word-wrap: break-word;
+}
+
+/* Fallback for browsers that don't support text-wrap */
+@supports not (text-wrap: wrap) {
+  .text-wrap-wrap {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .text-wrap-nowrap {
+    white-space: nowrap;
+  }
+  
+  .text-wrap-pretty {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  .text-wrap-balance {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: justify;
+  }
+}
+
 /* ===== ELEMENT-SPECIFIC ADJUSTMENTS ===== */
 /* Reset margins for different elements */
 .text-base p,
 .text-base div,
 .text-base label,
-.text-base span {
+.text-base span,
+.text-base b {
   margin: 0;
 }
 
 /* Inline elements should not have block display */
 .text-base span,
-.text-base b,
-.text-base i,
-.text-base u,
-.text-base s,
-.text-base small,
-.text-base del,
-.text-base ins,
-.text-base sub,
-.text-base sup {
+.text-base b {
   display: inline;
+}
+
+/* Block elements should maintain block display */
+.text-base p,
+.text-base div,
+.text-base label {
+  display: block;
 }
 
 /* Preserve semantic meaning for sub/sup */

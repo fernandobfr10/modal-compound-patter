@@ -1,15 +1,17 @@
 # 📝 Text Component
 
-A foundational text primitive based on **Radix UI** patterns, providing a consistent and flexible text styling system.
+A foundational text primitive based on **Radix UI** patterns, providing a consistent and flexible text styling system with advanced text rendering features.
 
 ## 🎯 **Key Features**
 
 ✅ **Size Scale 1-9** - Following Radix UI scaling  
 ✅ **AsChild Support** - Render custom elements  
-✅ **Multiple Elements** - span, p, label, div, and more  
+✅ **Limited Elements** - span, div, label, p, b (default: p)  
 ✅ **Font Weights** - light, regular, medium, bold  
 ✅ **Text Alignment** - left, center, right  
+✅ **🆕 Text Trimming** - normal, start, end, both  
 ✅ **Text Truncation** - ellipsis overflow handling  
+✅ **🆕 Text Wrapping** - wrap, nowrap, pretty, balance  
 ✅ **Style-agnostic** - Zero inline styles  
 ✅ **TypeScript** - Full type safety  
 
@@ -19,7 +21,7 @@ A foundational text primitive based on **Radix UI** patterns, providing a consis
 import { Text } from './components/text'
 import './components/text/text.css' // Required
 
-// Basic text (renders as span by default)
+// Basic text (renders as p by default)
 <Text>Hello world</Text>
 
 // Different sizes (1-9 scale)
@@ -29,14 +31,37 @@ import './components/text/text.css' // Required
 <Text size="9">Extra large text</Text>
 
 // Different elements
-<Text as="p">Paragraph text</Text>
-<Text as="label">Label text</Text>
+<Text as="span">Span text</Text>
 <Text as="div">Div element</Text>
+<Text as="label">Label text</Text>
+<Text as="b">Bold inline text</Text>
 
-// With styling
-<Text size="4" weight="bold" align="center">
-  Centered bold text
+// With styling and new features
+<Text size="4" weight="bold" align="center" trim="both" wrap="balance">
+  Advanced text with trimming and balanced wrapping
 </Text>
+```
+
+## 🆕 **New Text Features**
+
+### Text Trimming (`trim` prop)
+Removes whitespace around text content:
+
+```tsx
+<Text trim="normal">Normal spacing (default)</Text>
+<Text trim="start">Trimmed top spacing</Text>
+<Text trim="end">Trimmed bottom spacing</Text>
+<Text trim="both">Trimmed top and bottom spacing</Text>
+```
+
+### Text Wrapping (`wrap` prop)
+Controls how text wraps within containers:
+
+```tsx
+<Text wrap="wrap">Normal wrapping (default)</Text>
+<Text wrap="nowrap">No wrapping, text overflows</Text>
+<Text wrap="pretty">Optimized line breaks for readability</Text>
+<Text wrap="balance">Balanced line lengths for harmony</Text>
 ```
 
 ## 🎭 **AsChild Pattern**
@@ -45,12 +70,12 @@ Use `asChild` to render custom elements while maintaining Text styling:
 
 ```tsx
 // Custom button with text styling
-<Text asChild size="4" weight="medium">
+<Text asChild size="4" weight="medium" wrap="balance">
   <button className="custom-button">Custom Button</button>
 </Text>
 
-// Custom div with text styling  
-<Text asChild size="5" weight="bold" align="center">
+// Custom div with advanced text features
+<Text asChild size="5" weight="bold" align="center" trim="both">
   <div className="custom-container">Custom Container</div>
 </Text>
 ```
@@ -64,8 +89,8 @@ interface TextProps {
   // AsChild pattern
   asChild?: boolean
   
-  // HTML element (default: "span")
-  as?: 'span' | 'div' | 'label' | 'p' | 'b' | 'i' | 'u' | 's' | 'mark' | 'small' | 'del' | 'ins' | 'sub' | 'sup'
+  // HTML element (default: "p")
+  as?: 'span' | 'div' | 'label' | 'p' | 'b'
   
   // Size scale 1-9 (default: "3")
   size?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
@@ -76,8 +101,14 @@ interface TextProps {
   // Text alignment
   align?: 'left' | 'center' | 'right'
   
+  // 🆕 Text trimming (default: "normal")
+  trim?: 'normal' | 'start' | 'end' | 'both'
+  
   // Truncate with ellipsis (default: false)
   truncate?: boolean
+  
+  // 🆕 Text wrapping (default: "wrap")
+  wrap?: 'wrap' | 'nowrap' | 'pretty' | 'balance'
   
   // Standard HTML attributes
   className?: string
@@ -124,8 +155,20 @@ The component uses these CSS classes that you can customize:
 .text-align-center  
 .text-align-right
 
+/* 🆕 Text Trimming */
+.text-trim-normal             /* Default spacing */
+.text-trim-start              /* Trim top spacing */
+.text-trim-end                /* Trim bottom spacing */
+.text-trim-both               /* Trim both */
+
 /* Utilities */
 .text-truncate                /* Ellipsis overflow */
+
+/* 🆕 Text Wrapping */
+.text-wrap-wrap               /* Normal wrapping */
+.text-wrap-nowrap             /* No wrapping */
+.text-wrap-pretty             /* Pretty wrapping */
+.text-wrap-balance            /* Balanced wrapping */
 ```
 
 ## 📱 **Responsive Design**
@@ -138,52 +181,74 @@ Sizes automatically adjust on mobile devices:
 
 ## 💡 **Usage Examples**
 
-### Article Content
+### Article Content with Advanced Features
 ```tsx
 <article>
-  <Text size="6" weight="bold" as="h1">
-    Article Title
+  <Text size="6" weight="bold" as="h1" trim="both" wrap="balance">
+    Article Title with Balanced Wrapping
   </Text>
-  <Text size="2" weight="regular" style={{ opacity: 0.7 }}>
-    Published on March 15, 2024
+  <Text size="2" weight="regular" trim="start" style={{ opacity: 0.7 }}>
+    Published on March 15, 2024 • 5 min read
   </Text>
-  <Text size="3" as="p">
-    Article content goes here...
+  <Text size="3" wrap="pretty">
+    Article content with optimized line breaks for better readability...
   </Text>
 </article>
 ```
 
-### Form Labels
+### Inline Bold Text
+```tsx
+<Text size="3">
+  This is regular text with <Text as="b" size="3">bold text inline</Text> for emphasis.
+</Text>
+```
+
+### Form Labels with Trimming
 ```tsx
 <div>
-  <Text as="label" size="3" weight="medium">
+  <Text as="label" size="3" weight="medium" trim="end">
     Email Address
   </Text>
   <input type="email" />
-  <Text size="2" style={{ opacity: 0.6 }}>
-    We'll never share your email
+  <Text size="2" style={{ opacity: 0.6 }} wrap="balance">
+    We'll never share your email with anyone else
   </Text>
 </div>
 ```
 
-### Custom Components
+### Custom Components with Advanced Wrapping
 ```tsx
-<Text asChild size="4" weight="bold" align="center">
+<Text asChild size="4" weight="bold" align="center" wrap="balance">
   <button className="cta-button">
-    Get Started
+    Get Started with Our Amazing Platform
   </button>
 </Text>
 ```
 
 ## 🎯 **Best Practices**
 
-1. **Use size 3 as default** for body text
-2. **Create visual hierarchy** with different sizes
-3. **Be consistent** with size usage across your app
-4. **Use semantic elements** (`as` prop) for proper HTML
-5. **Combine with color** via CSS for themed variants
-6. **Use `asChild`** when integrating with design systems
+1. **Use paragraph as default** - `as="p"` is now the default element
+2. **Use size 3 as default** for body text
+3. **Create visual hierarchy** with different sizes
+4. **Leverage trim prop** for tight spacing control
+5. **Use wrap="balance"** for headings and short text blocks
+6. **Use wrap="pretty"** for body text and longer content
+7. **Use `as="b"` for inline emphasis** within other text
+8. **Be consistent** with size usage across your app
+9. **Use semantic elements** (`as` prop) for proper HTML
+10. **Combine with color** via CSS for themed variants
+11. **Use `asChild`** when integrating with design systems
+
+## 🆕 **What's New**
+
+- **Default element changed** from `span` to `p`
+- **Added `"b"` element** for inline bold text
+- **Limited `as` options** to `span | div | label | p | b` only
+- **New `trim` prop** for whitespace control
+- **New `wrap` prop** for advanced text wrapping
+- **Modern CSS features** with fallbacks for older browsers
+- **Enhanced demos** showcasing all new features
 
 ---
 
-**📝 Simple, consistent, and powerful text rendering for React applications!** 
+**📝 Modern, consistent, and powerful text rendering with advanced typography features!** 

@@ -4,8 +4,8 @@ import { cn } from './cn'
 /**
  * Text component class generator
  */
-export const textClasses = (props?: Pick<TextProps, 'size' | 'weight' | 'align' | 'truncate'> & { className?: string }) => {
-  const { size = '3', weight = 'regular', align, truncate, className } = props || {}
+export const textClasses = (props?: Pick<TextProps, 'size' | 'weight' | 'align' | 'trim' | 'truncate' | 'wrap'> & { className?: string }) => {
+  const { size = '3', weight = 'regular', align, trim = 'normal', truncate, wrap = 'wrap', className } = props || {}
   
   return cn(
     // Base class
@@ -33,8 +33,20 @@ export const textClasses = (props?: Pick<TextProps, 'size' | 'weight' | 'align' 
     align === 'center' && 'text-align-center',
     align === 'right' && 'text-align-right',
     
+    // Trim variants
+    trim === 'normal' && 'text-trim-normal',
+    trim === 'start' && 'text-trim-start',
+    trim === 'end' && 'text-trim-end',
+    trim === 'both' && 'text-trim-both',
+    
     // Truncate
     truncate && 'text-truncate',
+    
+    // Wrap variants
+    wrap === 'wrap' && 'text-wrap-wrap',
+    wrap === 'nowrap' && 'text-wrap-nowrap',
+    wrap === 'pretty' && 'text-wrap-pretty',
+    wrap === 'balance' && 'text-wrap-balance',
     
     // Custom classes
     className

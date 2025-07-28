@@ -14,9 +14,9 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
   
   /**
    * HTML element to render
-   * @default "span"
+   * @default "p"
    */
-  as?: 'span' | 'div' | 'label' | 'p' | 'b' | 'i' | 'u' | 's' | 'mark' | 'small' | 'del' | 'ins' | 'sub' | 'sup'
+  as?: 'span' | 'div' | 'label' | 'p' | 'b'
   
   /**
    * Text size scale from 1 (smallest) to 9 (largest)
@@ -36,8 +36,20 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
   align?: 'left' | 'center' | 'right'
   
   /**
+   * Text trimming - removes whitespace
+   * @default "normal"
+   */
+  trim?: 'normal' | 'start' | 'end' | 'both'
+  
+  /**
    * Whether to truncate text with ellipsis
    * @default false
    */
   truncate?: boolean
+  
+  /**
+   * Text wrapping behavior
+   * @default "wrap"
+   */
+  wrap?: 'wrap' | 'nowrap' | 'pretty' | 'balance'
 } 
