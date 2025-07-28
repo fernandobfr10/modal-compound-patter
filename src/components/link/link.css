@@ -1,0 +1,309 @@
+/**
+ * Link Component Styles
+ * 
+ * Following Radix UI Link patterns with 1-9 size scale
+ * Style-agnostic base classes - customize as needed
+ */
+
+/* ===== LINK BASE ===== */
+.link-base {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  color: #2563eb; /* Blue-600 */
+  text-decoration: none;
+  cursor: pointer;
+  display: inline;
+  outline: none;
+  font-family: inherit;
+}
+
+/* Visited state */
+.link-base:visited {
+  color: #7c3aed; /* Purple-600 */
+}
+
+/* Focus styles for accessibility */
+.link-base:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ===== SIZE SCALE (1-9) ===== */
+/* Following Radix UI text size scale - optimized for inline links */
+.link-size-1 { 
+  font-size: 0.75rem;    /* 12px */
+  line-height: 1rem;     /* 16px */
+  letter-spacing: 0.025em;
+}
+
+.link-size-2 { 
+  font-size: 0.875rem;   /* 14px */
+  line-height: 1.25rem;  /* 20px */
+  letter-spacing: 0.0125em;
+}
+
+.link-size-3 { 
+  font-size: 1rem;       /* 16px - default for links */
+  line-height: 1.5rem;   /* 24px */
+}
+
+.link-size-4 { 
+  font-size: 1.125rem;   /* 18px */
+  line-height: 1.75rem;  /* 28px */
+}
+
+.link-size-5 { 
+  font-size: 1.25rem;    /* 20px */
+  line-height: 1.875rem; /* 30px */
+}
+
+.link-size-6 { 
+  font-size: 1.5rem;     /* 24px */
+  line-height: 2rem;     /* 32px */
+}
+
+.link-size-7 { 
+  font-size: 1.875rem;   /* 30px */
+  line-height: 2.25rem;  /* 36px */
+  letter-spacing: -0.0125em;
+}
+
+.link-size-8 { 
+  font-size: 2.25rem;    /* 36px */
+  line-height: 2.5rem;   /* 40px */
+  letter-spacing: -0.025em;
+}
+
+.link-size-9 { 
+  font-size: 3rem;       /* 48px */
+  line-height: 3rem;     /* 48px */
+  letter-spacing: -0.0375em;
+}
+
+/* ===== FONT WEIGHTS ===== */
+.link-weight-light { 
+  font-weight: 300; 
+}
+
+.link-weight-regular { 
+  font-weight: 400; 
+}
+
+.link-weight-medium { 
+  font-weight: 500; 
+}
+
+.link-weight-bold { 
+  font-weight: 700; 
+}
+
+/* ===== TEXT ALIGNMENT ===== */
+.link-align-left { 
+  text-align: left; 
+}
+
+.link-align-center { 
+  text-align: center; 
+}
+
+.link-align-right { 
+  text-align: right; 
+}
+
+/* ===== TEXT TRIMMING ===== */
+/* Radix UI text-trim support */
+.link-trim-normal {
+  text-trim: normal;
+}
+
+.link-trim-start {
+  text-trim: trim-start;
+}
+
+.link-trim-end {
+  text-trim: trim-end;
+}
+
+.link-trim-both {
+  text-trim: trim-both;
+}
+
+/* Fallback for browsers that don't support text-trim */
+@supports not (text-trim: normal) {
+  .link-trim-start {
+    margin-top: 0;
+    line-height: 1;
+  }
+  
+  .link-trim-end {
+    margin-bottom: 0;
+    line-height: 1;
+  }
+  
+  .link-trim-both {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1;
+  }
+}
+
+/* ===== TRUNCATE ===== */
+.link-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== TEXT WRAPPING ===== */
+/* Radix UI text-wrap support */
+.link-wrap-wrap {
+  text-wrap: wrap;
+  word-wrap: break-word;
+}
+
+.link-wrap-nowrap {
+  text-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.link-wrap-pretty {
+  text-wrap: pretty;
+  word-wrap: break-word;
+}
+
+.link-wrap-balance {
+  text-wrap: balance;
+  word-wrap: break-word;
+}
+
+/* Fallback for browsers that don't support text-wrap */
+@supports not (text-wrap: wrap) {
+  .link-wrap-wrap {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .link-wrap-nowrap {
+    white-space: nowrap;
+  }
+  
+  .link-wrap-pretty {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  .link-wrap-balance {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: justify;
+  }
+}
+
+/* ===== UNDERLINE VARIANTS ===== */
+/* Link-specific underline behavior following Radix UI patterns */
+
+.link-underline-auto {
+  /* Smart underline: none by default, underline on hover/focus */
+  text-decoration: none;
+}
+
+.link-underline-auto:hover,
+.link-underline-auto:focus {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.link-underline-always {
+  /* Always show underline */
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.link-underline-hover {
+  /* Only show underline on hover/focus */
+  text-decoration: none;
+}
+
+.link-underline-hover:hover,
+.link-underline-hover:focus {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.link-underline-none {
+  /* Never show underline */
+  text-decoration: none !important;
+}
+
+.link-underline-none:hover,
+.link-underline-none:focus {
+  text-decoration: none !important;
+}
+
+/* ===== INTERACTION STATES ===== */
+/* Enhanced interaction feedback */
+.link-base:hover {
+  opacity: 0.8;
+}
+
+.link-base:active {
+  opacity: 0.6;
+}
+
+/* ===== ACCESSIBILITY ===== */
+/* Ensure good contrast and readability */
+.link-base {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .link-base:focus-visible {
+    outline: 3px solid;
+    outline-offset: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .link-base {
+    transition: none;
+  }
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 768px) {
+  /* Scale down larger link sizes on mobile for better touch targets */
+  .link-size-7 { 
+    font-size: 1.5rem;     /* 24px instead of 30px */
+    line-height: 2rem;     /* 32px */
+  }
+  
+  .link-size-8 { 
+    font-size: 1.875rem;   /* 30px instead of 36px */
+    line-height: 2.25rem;  /* 36px */
+  }
+  
+  .link-size-9 { 
+    font-size: 2.25rem;    /* 36px instead of 48px */
+    line-height: 2.5rem;   /* 40px */
+  }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .link-base {
+    color: #60a5fa; /* Blue-400 */
+  }
+  
+  .link-base:visited {
+    color: #a78bfa; /* Purple-400 */
+  }
+} 

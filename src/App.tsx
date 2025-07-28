@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { HeadingDemo } from "./components/heading/heading-demo"
+import { LinkDemo } from "./components/link/link-demo"
 import { Modal } from "./components/modal"
 import "./components/modal/modal.css"
 import { TextDemo } from "./components/text/text-demo"
@@ -7,6 +8,7 @@ import { TextDemo } from "./components/text/text-demo"
 export const App = () => {
   const [isTextDemoOpen, setIsTextDemoOpen] = useState(false)
   const [isHeadingDemoOpen, setIsHeadingDemoOpen] = useState(false)
+  const [isLinkDemoOpen, setIsLinkDemoOpen] = useState(false)
 
   return (
     <div className="app" style={{ padding: "2rem", fontFamily: "system-ui" }}>
@@ -34,15 +36,29 @@ export const App = () => {
             backgroundColor: "#059669",
             borderColor: "#059669",
             color: "white",
+            marginRight: "1rem",
             marginBottom: "0.5rem"
           }}
         >
           🎯 Heading Component (Radix UI)
         </button>
+
+        <button 
+          onClick={() => setIsLinkDemoOpen(true)}
+          className="modal-trigger"
+          style={{ 
+            backgroundColor: "#dc2626",
+            borderColor: "#dc2626",
+            color: "white",
+            marginBottom: "0.5rem"
+          }}
+        >
+          🔗 Link Component (Radix UI)
+        </button>
       </div>
 
       <div style={{ marginBottom: "2rem" }}>
-        <h3>🚀 Components - Modal + Text/Heading:</h3>
+        <h3>🚀 Components - Modal + Text/Heading/Link:</h3>
         
         <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem" }}>
           {/* Trigger interno (dentro do contexto) */}
@@ -59,7 +75,7 @@ export const App = () => {
                   <Modal.Title>Modal de Teste</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <p>Este é um modal simples para testar a integração com os componentes Text e Heading!</p>
+                  <p>Este é um modal simples para testar a integração com os componentes Typography!</p>
                 </Modal.Body>
               </Modal.Content>
             </Modal.Portal>
@@ -73,8 +89,8 @@ export const App = () => {
           padding: "1rem",
           fontSize: "0.875rem"
         }}>
-          <strong>🎯 Typography Components:</strong> Agora temos componentes Text e Heading completos baseados no Radix UI 
-          com suporte a <code>trim</code>, <code>wrap</code>, escala 1-9, elementos semânticos (Text: p/span/div/label/b | Heading: h1-h6)!
+          <strong>🎯 Typography Components:</strong> Agora temos componentes Text, Heading e Link completos baseados no Radix UI 
+          com suporte a <code>trim</code>, <code>wrap</code>, escala 1-9, elementos semânticos e funcionalidades específicas (Link: <code>underline</code>)!
         </div>
       </div>
 
@@ -105,6 +121,22 @@ export const App = () => {
             </Modal.Header>
             <Modal.Body>
               <HeadingDemo />
+            </Modal.Body>
+          </Modal.Content>
+        </Modal.Portal>
+      </Modal.Root>
+
+      {/* Demo Link Component */}
+      <Modal.Root open={isLinkDemoOpen} onOpenChange={setIsLinkDemoOpen}>
+        <Modal.Portal>
+          <Modal.Overlay />
+          <Modal.Content className="modal-content-large">
+            <Modal.Close />
+            <Modal.Header>
+              <Modal.Title>🔗 Link Component Demo</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <LinkDemo />
             </Modal.Body>
           </Modal.Content>
         </Modal.Portal>
