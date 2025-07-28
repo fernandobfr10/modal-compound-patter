@@ -3,12 +3,14 @@ import { HeadingDemo } from "./components/heading/heading-demo"
 import { LinkDemo } from "./components/link/link-demo"
 import { Modal } from "./components/modal"
 import "./components/modal/modal.css"
+import { PortalDemo } from "./components/portal-demo/portal-demo"
 import { TextDemo } from "./components/text/text-demo"
 
 export const App = () => {
   const [isTextDemoOpen, setIsTextDemoOpen] = useState(false)
   const [isHeadingDemoOpen, setIsHeadingDemoOpen] = useState(false)
   const [isLinkDemoOpen, setIsLinkDemoOpen] = useState(false)
+  const [isPortalDemoOpen, setIsPortalDemoOpen] = useState(false)
 
   return (
     <div className="app" style={{ padding: "2rem", fontFamily: "system-ui" }}>
@@ -50,15 +52,29 @@ export const App = () => {
             backgroundColor: "#dc2626",
             borderColor: "#dc2626",
             color: "white",
+            marginRight: "1rem",
             marginBottom: "0.5rem"
           }}
         >
           🔗 Link Component (Radix UI)
         </button>
+
+        <button 
+          onClick={() => setIsPortalDemoOpen(true)}
+          className="modal-trigger"
+          style={{ 
+            backgroundColor: "#7c3aed",
+            borderColor: "#7c3aed",
+            color: "white",
+            marginBottom: "0.5rem"
+          }}
+        >
+          🌐 Portal Component (Radix UI)
+        </button>
       </div>
 
       <div style={{ marginBottom: "2rem" }}>
-        <h3>🚀 Components - Modal + Text/Heading/Link:</h3>
+        <h3>🚀 Components - Modal + Typography + Portal:</h3>
         
         <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem" }}>
           {/* Trigger interno (dentro do contexto) */}
@@ -75,7 +91,7 @@ export const App = () => {
                   <Modal.Title>Modal de Teste</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <p>Este é um modal simples para testar a integração com os componentes Typography!</p>
+                  <p>Este é um modal simples para testar a integração com nosso sistema!</p>
                 </Modal.Body>
               </Modal.Content>
             </Modal.Portal>
@@ -89,8 +105,9 @@ export const App = () => {
           padding: "1rem",
           fontSize: "0.875rem"
         }}>
-          <strong>🎯 Typography Components:</strong> Agora temos componentes Text, Heading e Link completos baseados no Radix UI 
-          com suporte a <code>trim</code>, <code>wrap</code>, escala 1-9, elementos semânticos e funcionalidades específicas (Link: <code>underline</code>)!
+          <strong>🎯 Design System Completo:</strong> Agora temos componentes Text, Heading, Link e Portal 
+          baseados no Radix UI com <code>Slot</code> próprio, <code>Portal</code> próprio, suporte a 
+          <code>trim</code>, <code>wrap</code>, <code>underline</code> e <code>asChild</code>!
         </div>
       </div>
 
@@ -137,6 +154,22 @@ export const App = () => {
             </Modal.Header>
             <Modal.Body>
               <LinkDemo />
+            </Modal.Body>
+          </Modal.Content>
+        </Modal.Portal>
+      </Modal.Root>
+
+      {/* Demo Portal Component */}
+      <Modal.Root open={isPortalDemoOpen} onOpenChange={setIsPortalDemoOpen}>
+        <Modal.Portal>
+          <Modal.Overlay />
+          <Modal.Content className="modal-content-large">
+            <Modal.Close />
+            <Modal.Header>
+              <Modal.Title>🌐 Portal Component Demo</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <PortalDemo />
             </Modal.Body>
           </Modal.Content>
         </Modal.Portal>

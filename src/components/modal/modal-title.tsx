@@ -1,55 +1,27 @@
-import { forwardRef } from 'react'
-import { renderAsChild } from '../../utils/as-child'
+import { createElement, forwardRef } from 'react'
 import { modalClasses } from '../../utils/cn'
+import { Slot } from '../../utils/slot'
 import { useModalContext } from './modal-context'
 import type { ModalTitleProps } from './modal.types'
 
-const TitleHeading = forwardRef<HTMLHeadingElement, Omit<ModalTitleProps, 'asChild'>>(
-  ({ children, className, ...props }, ref) => {
-    const { titleId } = useModalContext()
-
-    return (
-      <h1
-        ref={ref}
-        id={titleId}
-        className={modalClasses.title(className)}
-        {...props}
-      >
-        {children}
-      </h1>
-    )
-  }
-)
-
-TitleHeading.displayName = 'TitleHeading'
-
+/**
+ * Modal.Title - Provides accessible title for the modal
+ */
 export const ModalTitle = forwardRef<HTMLHeadingElement, ModalTitleProps>(
-  ({ children, className, asChild, ...props }, ref) => {
+  ({ children, asChild, className, ...props }, ref) => {
     const { titleId } = useModalContext()
+    
+    const Comp = asChild ? Slot : 'h2'
 
-    if (asChild) {
-      return renderAsChild(
-        asChild,
-        children,
-        TitleHeading,
-        {
-          children,
-          className: modalClasses.title(className),
-          id: titleId,
-          ref,
-          ...props,
-        }
-      )
-    }
-
-    return (
-      <TitleHeading
-        ref={ref}
-        className={className}
-        {...props}
-      >
-        {children}
-      </TitleHeading>
+    return createElement(
+      Comp,
+      {
+        ref,
+        id: titleId,
+        className: modalClasses.title(className),
+        ...props,
+      },
+      children
     )
   }
 )

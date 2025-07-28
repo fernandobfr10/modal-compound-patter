@@ -1,28 +1,7 @@
 import { createElement, forwardRef } from 'react'
-import { renderAsChild } from '../../utils/as-child'
 import { headingClasses } from '../../utils/heading-classes'
+import { Slot } from '../../utils/slot'
 import type { HeadingProps } from './heading.types'
-
-/**
- * Default Heading component implementation
- */
-const DefaultHeading = forwardRef<HTMLHeadingElement, Omit<HeadingProps, 'asChild'>>(
-  ({ children, as = 'h1', size = '6', weight = 'regular', align, trim = 'normal', truncate, wrap = 'wrap', className, ...props }, ref) => {
-    const Element = as
-    
-    return createElement(
-      Element,
-      {
-        ref,
-        className: headingClasses({ size, weight, align, trim, truncate, wrap, className }),
-        ...props,
-      },
-      children
-    )
-  }
-)
-
-DefaultHeading.displayName = 'DefaultHeading'
 
 /**
  * Heading - A foundational heading primitive based on Radix UI
@@ -30,14 +9,15 @@ DefaultHeading.displayName = 'DefaultHeading'
  * @example
  * ```tsx
  * // Basic heading (renders as h1 by default, size 6)
- * <Heading>Main Title</Heading>
+ * <Heading>Main Page Title</Heading>
  * 
- * // Different heading levels
+ * // Different heading levels with appropriate sizes
  * <Heading as="h1" size="8">Page Title</Heading>
- * <Heading as="h2" size="6">Section Title</Heading>
- * <Heading as="h3" size="4">Subsection Title</Heading>
+ * <Heading as="h2" size="7">Section Title</Heading>
+ * <Heading as="h3" size="6">Subsection Title</Heading>
+ * <Heading as="h4" size="5">Sub-subsection Title</Heading>
  * 
- * // With advanced styling
+ * // With advanced features
  * <Heading size="7" weight="bold" align="center" trim="both" wrap="balance">
  *   Perfectly Balanced Heading with Advanced Typography
  * </Heading>
@@ -50,42 +30,16 @@ DefaultHeading.displayName = 'DefaultHeading'
  */
 export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
   ({ children, as = 'h1', size = '6', weight = 'regular', align, trim = 'normal', truncate, wrap = 'wrap', className, asChild, ...props }, ref) => {
-    if (asChild) {
-      return renderAsChild(
-        asChild,
-        children,
-        DefaultHeading,
-        {
-          children,
-          as,
-          size,
-          weight,
-          align,
-          trim,
-          truncate,
-          wrap,
-          className,
-          ref,
-          ...props,
-        }
-      )
-    }
+    const Comp = asChild ? Slot : as
 
-    return (
-      <DefaultHeading
-        ref={ref}
-        as={as}
-        size={size}
-        weight={weight}
-        align={align}
-        trim={trim}
-        truncate={truncate}
-        wrap={wrap}
-        className={className}
-        {...props}
-      >
-        {children}
-      </DefaultHeading>
+    return createElement(
+      Comp,
+      {
+        ref,
+        className: headingClasses({ size, weight, align, trim, truncate, wrap, className }),
+        ...props,
+      },
+      children
     )
   }
 )

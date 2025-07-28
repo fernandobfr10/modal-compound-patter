@@ -1,55 +1,27 @@
-import { forwardRef } from 'react'
-import { renderAsChild } from '../../utils/as-child'
+import { createElement, forwardRef } from 'react'
 import { modalClasses } from '../../utils/cn'
+import { Slot } from '../../utils/slot'
 import { useModalContext } from './modal-context'
 import type { ModalDescriptionProps } from './modal.types'
 
-const DescriptionParagraph = forwardRef<HTMLParagraphElement, Omit<ModalDescriptionProps, 'asChild'>>(
-  ({ children, className, ...props }, ref) => {
-    const { descriptionId } = useModalContext()
-
-    return (
-      <p
-        ref={ref}
-        id={descriptionId}
-        className={modalClasses.description(className)}
-        {...props}
-      >
-        {children}
-      </p>
-    )
-  }
-)
-
-DescriptionParagraph.displayName = 'DescriptionParagraph'
-
+/**
+ * Modal.Description - Provides accessible description for the modal
+ */
 export const ModalDescription = forwardRef<HTMLParagraphElement, ModalDescriptionProps>(
-  ({ children, className, asChild, ...props }, ref) => {
+  ({ children, asChild, className, ...props }, ref) => {
     const { descriptionId } = useModalContext()
+    
+    const Comp = asChild ? Slot : 'p'
 
-    if (asChild) {
-      return renderAsChild(
-        asChild,
-        children,
-        DescriptionParagraph,
-        {
-          children,
-          className: modalClasses.description(className),
-          id: descriptionId,
-          ref,
-          ...props,
-        }
-      )
-    }
-
-    return (
-      <DescriptionParagraph
-        ref={ref}
-        className={className}
-        {...props}
-      >
-        {children}
-      </DescriptionParagraph>
+    return createElement(
+      Comp,
+      {
+        ref,
+        id: descriptionId,
+        className: modalClasses.description(className),
+        ...props,
+      },
+      children
     )
   }
 )

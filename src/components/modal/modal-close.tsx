@@ -1,67 +1,34 @@
-import { forwardRef } from 'react'
-import { renderAsChild } from '../../utils/as-child'
+import { createElement, forwardRef } from 'react'
 import { modalClasses } from '../../utils/cn'
+import { Slot } from '../../utils/slot'
 import { useModalContext } from './modal-context'
 import type { ModalCloseProps } from './modal.types'
 
-const CloseButton = forwardRef<HTMLButtonElement, Omit<ModalCloseProps, 'asChild'>>(
-  ({ children = '×', onClick, className, ...props }, ref) => {
+/**
+ * Modal.Close - Closes the modal
+ */
+export const ModalClose = forwardRef<HTMLButtonElement, ModalCloseProps>(
+  ({ children = '✕', onClick, asChild, className, ...props }, ref) => {
     const { onOpenChange } = useModalContext()
-
+    
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       onOpenChange(false)
       onClick?.(event)
     }
 
-    return (
-      <button
-        ref={ref}
-        type="button"
-        className={modalClasses.close(className)}
-        {...props}
-        onClick={handleClick}
-      >
-        {children}
-      </button>
-    )
-  }
-)
+    const Comp = asChild ? Slot : 'button'
 
-CloseButton.displayName = 'CloseButton'
-
-export const ModalClose = forwardRef<HTMLButtonElement, ModalCloseProps>(
-  ({ children = '×', onClick, className, asChild, ...props }, ref) => {
-    const { onOpenChange } = useModalContext()
-
-    if (asChild) {
-      const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        onOpenChange(false)
-        onClick?.(event)
-      }
-
-      return renderAsChild(
-        asChild,
-        children,
-        CloseButton,
-        {
-          children,
-          onClick: handleClick,
-          className: modalClasses.close(className),
-          ref,
-          ...props,
-        }
-      )
-    }
-
-    return (
-      <CloseButton
-        ref={ref}
-        onClick={onClick}
-        className={className}
-        {...props}
-      >
-        {children}
-      </CloseButton>
+    return createElement(
+      Comp,
+      {
+        ref,
+        type: asChild ? undefined : 'button',
+        onClick: handleClick,
+        className: modalClasses.close(className),
+        'aria-label': 'Close modal',
+        ...props,
+      },
+      children
     )
   }
 )

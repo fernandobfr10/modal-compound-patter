@@ -1,17 +1,25 @@
-import { ThemeProvider } from '@akad/design-system/react'
-import { createPortal } from 'react-dom'
-import { useModalContext } from './modal-context'
-import type { ModalPortalProps } from './modal.types'
+import { ThemeProvider } from "@akad/design-system/react";
+import { Portal } from "../../utils/portal";
+import { useModalContext } from "./modal-context";
+import type { ModalPortalProps } from "./modal.types";
 
-import './modal.css'
+import "./modal.css";
 
-export function ModalPortal({ 
-  children, 
-  container = document.body 
-}: ModalPortalProps) {
-  const { open } = useModalContext()
+/**
+ * Modal.Portal - Renders modal content in a portal
+ *
+ * Uses our custom Portal component to render children outside the normal React tree
+ */
+export function ModalPortal({ children, container }: ModalPortalProps) {
+  const { open } = useModalContext();
 
-  if (!open) return null
+  if (!open) return null;
 
-  return createPortal(<ThemeProvider library="default" theme="light">{children}</ThemeProvider>, container)
-} 
+  return (
+    <Portal container={container}>
+      <ThemeProvider library="default" theme="light">
+        {children}
+      </ThemeProvider>
+    </Portal>
+  );
+}

@@ -1,89 +1,44 @@
-import { forwardRef, useContext } from 'react'
-import { renderAsChild } from '../../utils/as-child'
+import { createElement, forwardRef, useContext } from 'react'
 import { modalClasses } from '../../utils/cn'
+import { Slot } from '../../utils/slot'
 import { ModalContext } from './modal-context'
 import type { ModalTriggerProps } from './modal.types'
 
-const TriggerButton = forwardRef<HTMLButtonElement, Omit<ModalTriggerProps, 'asChild'>>(
-  ({ children, onClick, className, onOpenChange, ...props }, ref) => {
-    // Tenta obter o contexto, mas não falha se não existir
-    const context = useContext(ModalContext)
+/**
+ * Modal.Trigger - Triggers the modal open state
+ * 
+ * Can be used both inside Modal.Root context and as standalone with onOpenChange
+ */
+export const ModalTrigger = forwardRef<HTMLButtonElement, ModalTriggerProps>(
+  ({ children, onClick, onOpenChange, asChild, className, ...props }, ref) => {
+    const modalContext = useContext(ModalContext)
     
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      // Prioridade: 1) onOpenChange prop, 2) contexto, 3) erro
+      // Check for external onOpenChange first (for standalone usage)
       if (onOpenChange) {
         onOpenChange(true)
-      } else if (context?.onOpenChange) {
-        context.onOpenChange(true)
-      } else {
-        console.warn(
-          'ModalTrigger: Você deve fornecer onOpenChange como prop ou usar dentro de Modal.Root'
-        )
+      } 
+      // Fall back to modal context (for usage inside Modal.Root)
+      else if (modalContext) {
+        modalContext.onOpenChange(true)
       }
       
+      // Call the original onClick if provided
       onClick?.(event)
     }
 
-    return (
-      <button
-        ref={ref}
-        type="button"
-        className={modalClasses.trigger(className)}
-        {...props}
-        onClick={handleClick}
-      >
-        {children}
-      </button>
-    )
-  }
-)
+    const Comp = asChild ? Slot : 'button'
 
-TriggerButton.displayName = 'TriggerButton'
-
-export const ModalTrigger = forwardRef<HTMLButtonElement, ModalTriggerProps>(
-  ({ children, onClick, className, asChild, onOpenChange, ...props }, ref) => {
-    const context = useContext(ModalContext)
-
-    if (asChild) {
-      const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        if (onOpenChange) {
-          onOpenChange(true)
-        } else if (context?.onOpenChange) {
-          context.onOpenChange(true)
-        } else {
-          console.warn(
-            'ModalTrigger: Você deve fornecer onOpenChange como prop ou usar dentro de Modal.Root'
-          )
-        }
-        
-        onClick?.(event)
-      }
-
-      return renderAsChild(
-        asChild,
-        children,
-        TriggerButton,
-        {
-          children,
-          onClick: handleClick,
-          className: modalClasses.trigger(className),
-          onOpenChange,
-          ref,
-          ...props,
-        }
-      )
-    }
-
-    return (
-      <TriggerButton
-        ref={ref}
-        onClick={onClick}
-        className={className}
-        onOpenChange={onOpenChange}
-        {...props}
-      >
-        {children}
-      </TriggerButton>
+    return createElement(
+      Comp,
+      {
+        ref,
+        type: asChild ? undefined : 'button',
+        onClick: handleClick,
+        className: modalClasses.trigger(className),
+        ...props,
+      },
+      children
     )
   }
 )
